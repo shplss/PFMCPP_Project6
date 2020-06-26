@@ -138,7 +138,10 @@ int main()
     
     C f;                                            //7
     auto* smaller = f.compare(&var1, &var2);                              //8
-    std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    if(smaller != nullptr)
+    {
+        std::cout << "the smaller one is << " << smaller->name << std::endl; //9
+    }
     
     U u1;
     float updatedValue = 5.f;
