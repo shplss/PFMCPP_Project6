@@ -65,8 +65,10 @@ struct C                                             //4
 {
     T* compare(T* a, T* b)                           //5
     {
-        if( a->value < b->value ) return a;
-        if( a->value > b->value ) return b;
+        if(a != nullptr && a != nullptr) {
+            if( a->value < b->value ) return a;
+            if( a->value > b->value ) return b;
+        }
         return nullptr;
     }
 };
@@ -76,15 +78,19 @@ struct U
     float valFloat1{ 0 }, valFloat2{ 0 };
     float valueUpdate(float* updVal)      //12
     {
-        std::cout << "U's valFloat1 value: " << valFloat1 << std::endl;
-        valFloat1 = *updVal;
-        std::cout << "U's valFloat1 updated value: " << valFloat1 << std::endl;
-        while( std::abs(valFloat2 - valFloat1) > 0.001f )
+        if(updVal != nullptr)
         {
-            valFloat2 += valFloat1 / 2.0f;
+            std::cout << "U's valFloat1 value: " << valFloat1 << std::endl;
+            valFloat1 = *updVal;
+            std::cout << "U's valFloat1 updated value: " << valFloat1 << std::endl;
+            while( std::abs(valFloat2 - valFloat1) > 0.001f )
+            {
+                valFloat2 += valFloat1 / 2.0f;
+            }
+            std::cout << "U's valFloat2 updated value: " << valFloat2 << std::endl;
+            return valFloat2 * valFloat1;
         }
-        std::cout << "U's valFloat2 updated value: " << valFloat2 << std::endl;
-        return valFloat2 * valFloat1;
+        return 0.0f;
     }
 };
 
@@ -92,18 +98,22 @@ struct D
 {
     static float valueUpdate(U* that, float* updVal)        //10
     {
-        std::cout << "U's valFloat1 value: " << that->valFloat1 << std::endl;
-        that->valFloat1 = *updVal;
-        std::cout << "U's valFloat1 updated value: " << that->valFloat1 << std::endl;
-        while( std::abs(that->valFloat2 - that->valFloat1) > 0.001f )
+        if(that != nullptr && updVal != nullptr)
         {
-            /*
-             write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
-             */
-            that->valFloat2 += that->valFloat1 / 2.0f;
+            std::cout << "U's valFloat1 value: " << that->valFloat1 << std::endl;
+            that->valFloat1 = *updVal;
+            std::cout << "U's valFloat1 updated value: " << that->valFloat1 << std::endl;
+            while( std::abs(that->valFloat2 - that->valFloat1) > 0.001f )
+            {
+                /*
+                write something that makes the distance between that-><#name2#> and that-><#name1#> get smaller
+                */
+              that->valFloat2 += that->valFloat1 / 2.0f;
+            }
+            std::cout << "U's valFloat2 updated value: " << that->valFloat2 << std::endl;
+            return that->valFloat2 * that->valFloat1;
         }
-        std::cout << "U's valFloat2 updated value: " << that->valFloat2 << std::endl;
-        return that->valFloat2 * that->valFloat1;
+        return 0.0f;
     }
 };
         
